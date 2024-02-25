@@ -13,7 +13,6 @@ namespace ConsoleApp1
             Console.WriteLine($"TypeName:{typelaptopInfo.Name}");
 
 
-            MemberInfo[] members = laptopType.GetMembers();
             Console.WriteLine("Members:");
             foreach (MemberInfo member in typelaptopInfo.DeclaredMembers)
             {
