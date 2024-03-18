@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using WebApplication1.Models;
 using WebApplication1.Services;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace WebApplication1.Controllers
 {
@@ -21,8 +22,8 @@ namespace WebApplication1.Controllers
             _booksServices = booksServices;
         }
 
-        [HttpGet("Books")]
-        public async Task<IActionResult> GetBooks()
+        [HttpGet("BooksAPI")]
+        public async Task<IActionResult> GetBooksApi()
         {
             try
             {
@@ -46,21 +47,16 @@ namespace WebApplication1.Controllers
 
         }
 
-        [HttpPost("AddBook")]
-        public async Task<IActionResult> AddBook(Book book)
+        [HttpPost("PostAddBook")]
+        public async Task<IActionResult> PostAddBook(Book book)
         {
             try
             {
-
-                var response = new ResponseModel<string>();
-                if (_booksServices.AddBook(book))
-                {
-                    response.Message = "The data is added";
-                    response.StatusCode = HttpStatusCode.Created;
-                    return StatusCode((int)response.StatusCode, response);
-                }
-                response.Message = "The data already exists";
-                response.StatusCode = HttpStatusCode.BadRequest;
+                var response = new ResponseModel<Book>();
+                _booksServices.AddBook(book);
+                response.Message = "The data is added";
+                response.StatusCode = HttpStatusCode.Created;
+                response.Data = null;
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
@@ -73,5 +69,29 @@ namespace WebApplication1.Controllers
                 });
             }
         }
+
+    [HttpGet("GetAddBooks")]
+    public async Task<IActionResult> GetAddBooks()
+    {
+        try
+        {
+            var response = new ResponseModel<Book>();
+            var books = _booksServices.GetBooks();
+            response.Message = "The data is retrieved";
+            response.StatusCode = HttpStatusCode.OK;
+            response.Data = books;
+            return StatusCode((int)response.StatusCode, response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
+            {
+                Message = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError,
+                Data = null
+            });
+        }
     }
 }
+    }
+

@@ -4,6 +4,8 @@ namespace WebApplication1.Services
 {
     public interface IBooksServices
     {
-        bool AddBook(Book book);
+        void AddBook(Book book);
+        List<Book>  GetBooks();  
+
     }
 }

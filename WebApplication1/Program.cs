@@ -12,8 +12,8 @@ namespace WebApplication1
             // Add services to the container.
             builder.Services.AddTransient<IApiClient, ApiClient>();
             builder.Services.AddHttpClient();
-            builder.Services.AddScoped<IBooksServices, BooksService>();
-
+            builder.Services.AddSingleton<IBooksServices, BooksService>();
+            
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
