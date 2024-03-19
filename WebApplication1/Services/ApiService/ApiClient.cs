@@ -1,6 +1,6 @@
-﻿namespace WebApplication1.Services
+﻿namespace WebApplication1.Services.ApiService
 {
-    public class ApiClient: IApiClient
+    public class ApiClient : IApiClient
     {
         private readonly HttpClient _httpClient;
         public ApiClient(HttpClient httpClient)

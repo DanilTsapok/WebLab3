@@ -1,5 +1,9 @@
+using WebApplication1.Services.ApiService;
+using WebApplication1.Services.BookService;
+using WebApplication1.Services.LoanService;
+using WebApplication1.Services.UserService;
 
-using WebApplication1.Services;
+
 
 namespace WebApplication1
 {
@@ -12,9 +16,11 @@ namespace WebApplication1
             // Add services to the container.
             builder.Services.AddTransient<IApiClient, ApiClient>();
             builder.Services.AddHttpClient();
-            builder.Services.AddSingleton<IBooksServices, BooksService>();
-            
+            builder.Services.AddSingleton<IBooksServices, BooksService>(); //Cервіс зберігає єдиний список книг та методів взаємодії для роботи з об'єктом використовується addsingleton
+            builder.Services.AddSingleton<IUserService, UserService>();//Cервіс зберігає єдиний список книг та методів взаємодії для роботи з об'єктом використовується addsingleton
+            builder.Services.AddSingleton<ILoanSevice, LoanService>();//Cервіс зберігає єдиний список книг та методів взаємодії для роботи з об'єктом використовується addsingleton
             builder.Services.AddControllers();
+           
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
