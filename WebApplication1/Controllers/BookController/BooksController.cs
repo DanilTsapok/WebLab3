@@ -10,7 +10,7 @@ using WebApplication1.Services.ApiService;
 using WebApplication1.Services.BookService;
 using static System.Reflection.Metadata.BlobBuilder;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1.Controllers.BookController
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -156,7 +156,7 @@ namespace WebApplication1.Controllers
                 });
             }
         }
-        [HttpDelete("DeleteBook") ]
+        [HttpDelete("DeleteBook")]
         public async Task<IActionResult> DeleteBook(int Id)
         {
             try
@@ -172,7 +172,7 @@ namespace WebApplication1.Controllers
                 }
                 return StatusCode((int)response.StatusCode, response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
                 {

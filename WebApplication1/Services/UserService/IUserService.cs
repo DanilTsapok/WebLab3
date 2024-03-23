@@ -7,7 +7,8 @@ namespace WebApplication1.Services.UserService
 
         Task<List<UserModel>> GetAllUsers();
         Task<UserModel> CreateUser(UserModel user);
-        Task<UserModel> GetUser(int Id);
+        Task<UserModel> GetUserById(int Id);
+        Task<UserModel> GetUserByEmail(string email);
         Task<UserModel> UpdateUser(int Id, UserModel user);
         Task<UserModel> DeleteUser(int Id);
     }

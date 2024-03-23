@@ -4,12 +4,12 @@ using WebApplication1.Models.LoanModel;
 using WebApplication1.Models.ResponseModel;
 using WebApplication1.Services.LoanService;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1.Controllers.LoansController
 {
 
     [ApiController]
     [Route("api/[controller]")]
-    public class LoansController:ControllerBase
+    public class LoansController : ControllerBase
     {
         private readonly ILoanSevice _loanSevice;
 
@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
                 response.Data = loans;
                 return StatusCode((int)response.StatusCode, response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
                 {
@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
             {
                 var response = new ResponseModel<LoanModel>();
                 var loan = await _loanSevice.GetLoanById(Id);
-                if(loan != null)
+                if (loan != null)
                 {
                     response.Message = "";
                     response.StatusCode = HttpStatusCode.OK;
@@ -59,14 +59,16 @@ namespace WebApplication1.Controllers
                 response.Data = loan;
                 return StatusCode((int)response.StatusCode, response);
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
                 {
                     Message = ex.Message,
                     StatusCode = HttpStatusCode.InternalServerError,
                     Data = ex.ToString()
                 }); ;
-                
+
             }
         }
 
@@ -77,7 +79,7 @@ namespace WebApplication1.Controllers
             {
                 var response = new ResponseModel<LoanModel>();
                 var newLoan = await _loanSevice.CreateLoan(loan);
-                if(newLoan != null)
+                if (newLoan != null)
                 {
                     response.Message = "";
                     response.StatusCode = HttpStatusCode.OK;
@@ -89,7 +91,8 @@ namespace WebApplication1.Controllers
                 response.Data = loan;
                 return StatusCode((int)response.StatusCode, response);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
                 {
                     Message = ex.Message,
@@ -102,9 +105,10 @@ namespace WebApplication1.Controllers
         [HttpPut("UpdateLoan")]
         public async Task<IActionResult> UpdateLoan(int Id, LoanModel loan)
         {
-            try { 
+            try
+            {
                 var response = new ResponseModel<LoanModel>();
-                var updateLoan = await _loanSevice.UpdateLoan(Id,loan);
+                var updateLoan = await _loanSevice.UpdateLoan(Id, loan);
                 if (updateLoan != null)
                 {
                     response.Message = "";
@@ -129,7 +133,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpDelete("DeleteLoan")]
-        public async Task<IActionResult> DeleteLoan(int Id )
+        public async Task<IActionResult> DeleteLoan(int Id)
         {
             try
             {

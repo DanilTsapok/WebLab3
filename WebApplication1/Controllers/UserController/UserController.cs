@@ -8,7 +8,7 @@ using WebApplication1.Services.ApiService;
 using WebApplication1.Services.UserService;
 
 
-namespace WebApplication1.Controllers
+namespace WebApplication1.Controllers.UserController
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -16,11 +16,11 @@ namespace WebApplication1.Controllers
     {
 
         private readonly IUserService _userService;
-      
+
         public UserController(IUserService userService)
         {
             _userService = userService;
-          
+
         }
 
         [HttpGet("Id")]
@@ -29,21 +29,21 @@ namespace WebApplication1.Controllers
             try
             {
                 var response = new ResponseModel<UserModel>();
-                var user = await _userService.GetUser(Id);
+                var user = await _userService.GetUserById(Id);
                 if (user != null)
                 {
                     response.Message = "";
                     response.StatusCode = HttpStatusCode.OK;
                     response.Data = user;
                     return StatusCode((int)response.StatusCode, response);
-                }                
-                    response.Message = "User wasn`t found";
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Data = user;
-                    return StatusCode((int)response.StatusCode, response);
+                }
+                response.Message = "User is not found";
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.Data = user;
+                return StatusCode((int)response.StatusCode, response);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
                 {
@@ -80,9 +80,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("CreateUser")]
-        public async Task<IActionResult> PostCreateUser([FromBody]UserModel? user)
+        public async Task<IActionResult> PostCreateUser([FromBody] UserModel? user)
         {
-            
+
             try
             {
                 var response = new ResponseModel<UserModel>();
@@ -95,7 +95,7 @@ namespace WebApplication1.Controllers
                     return StatusCode((int)response.StatusCode, response);
                 }
                 response.StatusCode = HttpStatusCode.NotFound;
-                response.Message = "User is not found";
+                response.Message = "User is not add";
                 return StatusCode((int)response.StatusCode, response);
 
             }
@@ -110,46 +110,47 @@ namespace WebApplication1.Controllers
             }
         }
         [HttpPut("Id")]
-        public async Task <IActionResult>UpdateUser( int Id, UserModel user)
+        public async Task<IActionResult> UpdateUser(int Id, UserModel user)
         {
             try
             {
                 var response = new ResponseModel<UserModel>();
-                var userCurrent =await _userService.UpdateUser(Id, user);
-                if(userCurrent != null)
+                var userCurrent = await _userService.UpdateUser(Id, user);
+                if (userCurrent != null)
                 {
                     response.StatusCode = HttpStatusCode.Created;
                     response.Message = "User updated";
                     response.Data = user;
-                    return StatusCode((int)response.StatusCode,response);
+                    return StatusCode((int)response.StatusCode, response);
                 }
                 response.StatusCode = HttpStatusCode.NotFound;
                 response.Message = "User is not found";
                 return StatusCode((int)response.StatusCode, response);
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
                 {
                     Message = ex.Message,
                     StatusCode = HttpStatusCode.BadRequest,
-                   
+
                 });
             }
         }
 
         [HttpDelete("Id")]
-        public async Task<IActionResult>DeleteUser(int Id)
+        public async Task<IActionResult> DeleteUser(int Id)
         {
             try
             {
                 var response = new ResponseModel<UserModel>();
                 var user = await _userService.DeleteUser(Id);
-                if(user != null)
+                if (user != null)
                 {
 
                     response.StatusCode = HttpStatusCode.OK;
-                    response.Message = "User deleted";
+                    response.Message = "User is delete";
                     response.Data = user;
                     return StatusCode((int)response.StatusCode, response);
                 }
@@ -166,7 +167,7 @@ namespace WebApplication1.Controllers
 
                 });
             }
-        
+
         }
     }
 }
