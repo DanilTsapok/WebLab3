@@ -5,18 +5,18 @@ namespace WebApplication1.Services.UserService
 {
     public class UserService : IUserService
     {
-        public static List<UserModel> _users = new List<UserModel> { new UserModel
+        public List<UserModel> _users = new List<UserModel> { new UserModel
         {
             Id = 1,
             FirstName = "Danil",
             LastName = "Tsapok",
             Email = "danyatsapok200445@gmail.com",
-            Password = "123",
-            DayOfBirth = DateTime.Now.AddDays(12),  
+            Password = "$2a$11$8aVockjwHg98J7qoLggEnODJwn/5nl5N3BiDfehB4DRLgCWuCUgdC",
+            DayOfBirth = DateTime.Now.AddDays(12),
             LastLogin = DateTime.Now,
-            FailedLoginAttempts = 0, 
-        } 
- 
+            FailedLoginAttempts = 0,
+        }
+
         };
 
 
@@ -40,12 +40,12 @@ namespace WebApplication1.Services.UserService
             return Task.FromResult(user);
         }
 
-        public Task<UserModel> GetUserByEmail(string email)
+        public UserModel GetUserByEmail(string email)
         {
             var user = _users.Find(u => u.Email == email);
-            if(user != null)
+            if (user != null)
             {
-            return Task.FromResult(user);
+                return user;
             }
             throw new Exception();
         }
@@ -75,11 +75,11 @@ namespace WebApplication1.Services.UserService
         {
             if (!_users.Contains(user))
             {
-            _users.Add(user);
+                _users.Add(user);
             }
             return Task.FromResult(user);
         }
 
-      
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WebApplication1.Models.LoanModel;
 using WebApplication1.Models.ResponseModel;
@@ -9,6 +10,7 @@ namespace WebApplication1.Controllers.LoansController
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class LoansController : ControllerBase
     {
         private readonly ILoanSevice _loanSevice;

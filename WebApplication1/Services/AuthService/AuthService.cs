@@ -24,7 +24,7 @@ namespace WebApplication1.Services.AuthServices
             _passwordHasher = passwordHasher;
         }
 
-        public Task<UserModel> Register(RegisterUser user)
+        public async Task<UserModel> Register(RegisterUser user)
         {
             var hashedPassword = _passwordHasher.Generate(user.Password);
             var newUser = new UserModel
@@ -32,31 +32,29 @@ namespace WebApplication1.Services.AuthServices
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 DayOfBirth = user.DayOfBirth,
-                Email=user.Email,
+                Email = user.Email,
                 Password = hashedPassword,
-
             };
-            return Task.FromResult(newUser);
+            await _userService.CreateUser(newUser);
+            return newUser;
         }
 
 
         public Task<string> Login(LoginUser user)
         {
-            return CheckedUser(user);
-        }
-
-        public Task<string> CheckedUser(LoginUser user)
-        {
             var existingUser = _userService.GetUserByEmail(user.Email);
-            if (existingUser != null)
+            var result = _passwordHasher.Verify(user.Password, existingUser.Password);
+            Console.WriteLine(existingUser.Password);
+            if (result)
             {
                 return GenerateJSONWebToken(user);
             }
             throw new Exception();
         }
+
         public Task<string> GenerateJSONWebToken(LoginUser user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JWT")["Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {

@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WebApplication1.Models.AuthResponseModel;
@@ -11,6 +12,7 @@ namespace WebApplication1.Controllers.AuthController
 {
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class AuthContoller : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -54,7 +56,6 @@ namespace WebApplication1.Controllers.AuthController
             {
                 var response = new AuthResponseModel<UserModel>();
                 var newUser = await _authService.Register(user);
-                await _userService.CreateUser(newUser);
                 response.StatusCode = HttpStatusCode.OK;
                 response.Data = newUser;
                 return StatusCode((int)response.StatusCode, response);
