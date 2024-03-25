@@ -43,13 +43,18 @@ namespace WebApplication1.Services.AuthServices
         public Task<string> Login(LoginUser user)
         {
             var existingUser = _userService.GetUserByEmail(user.Email);
+
             var result = _passwordHasher.Verify(user.Password, existingUser.Password);
-            Console.WriteLine(existingUser.Password);
+  
             if (result)
             {
+                existingUser.LastLogin = DateTime.Now;
                 return GenerateJSONWebToken(user);
             }
-            throw new Exception();
+            existingUser.FailedLoginAttempts += 1;
+            Console.WriteLine(existingUser.FailedLoginAttempts);
+            return null;
+            
         }
 
         public Task<string> GenerateJSONWebToken(LoginUser user)

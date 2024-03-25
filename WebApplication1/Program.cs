@@ -95,8 +95,7 @@ namespace WebApplication1
             app.UseAuthorization();
 
             app.MapControllers();
-            var test = BCrypt.Net.BCrypt.EnhancedHashPassword("123");
-            Console.WriteLine(test);
+
             app.Run();
         }
     }

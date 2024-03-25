@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers.UserController
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    
     public class UserController : ControllerBase
     {
 
@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers.UserController
             _userService = userService;
 
         }
-
+        [Authorize]
         [HttpGet("Id")]
         public async Task<IActionResult> GetUser(int Id)
         {
@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers.UserController
 
             }
         }
-
+        [Authorize]
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -80,7 +80,7 @@ namespace WebApplication1.Controllers.UserController
                 });
             }
         }
-
+        [Authorize]
         [HttpPost("CreateUser")]
         public async Task<IActionResult> PostCreateUser([FromBody] UserModel? user)
         {
@@ -111,6 +111,7 @@ namespace WebApplication1.Controllers.UserController
                 });
             }
         }
+        [Authorize]
         [HttpPut("Id")]
         public async Task<IActionResult> UpdateUser(int Id, UserModel user)
         {
@@ -140,7 +141,7 @@ namespace WebApplication1.Controllers.UserController
                 });
             }
         }
-
+        [Authorize]
         [HttpDelete("Id")]
         public async Task<IActionResult> DeleteUser(int Id)
         {

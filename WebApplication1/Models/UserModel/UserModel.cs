@@ -21,7 +21,7 @@ namespace WebApplication1.Models.UserModel
         public DateTime? DayOfBirth { get; set; }
         public string? Password { get; set; }
         public DateTime? LastLogin { get; set; }
-        public int? FailedLoginAttempts { get; set; }
+        public int FailedLoginAttempts { get; set; }
 
 
         public UserModel(int Id, string FirstName, string LastName, string Email, DateTime DayOfBirth, string Password, DateTime LastLogin, int FailedLoginAttempts)

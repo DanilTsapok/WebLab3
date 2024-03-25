@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using System.Net;
 using WebApplication1.Models.UserModel;
 
 namespace WebApplication1.Services.UserService
@@ -12,14 +13,32 @@ namespace WebApplication1.Services.UserService
             LastName = "Tsapok",
             Email = "danyatsapok200445@gmail.com",
             Password = "$2a$11$8aVockjwHg98J7qoLggEnODJwn/5nl5N3BiDfehB4DRLgCWuCUgdC",
-            DayOfBirth = DateTime.Now.AddDays(12),
-            LastLogin = DateTime.Now,
+            DayOfBirth = DateTime.UtcNow.AddDays(12),
+            LastLogin = DateTime.UtcNow.AddDays(-2),
+            FailedLoginAttempts = 0,
+        }, new UserModel
+        {
+            Id =2,
+            FirstName ="John",
+            LastName="Dou",
+            Email="johndoe@gmail.com",
+            Password = "$2a$11$Yii5m0KjnG6J6qti14951.hcobYXfntVPpgPFsmmGoQPmd08u5jRy",
+            DayOfBirth = DateTime.UtcNow.AddDays(-12),
+            LastLogin = DateTime.UtcNow.AddDays(-2),
+            FailedLoginAttempts = 0,
+        }, new UserModel
+        {
+            Id =2,
+            FirstName ="Jane",
+            LastName="Smith",
+            Email="janesmith@gmail.com",
+            Password = "$2a$11$OWh.EKIqyozz8xbxqvmygOmrXlUvWbyNeVqyVd5jficbKS9Sf2g1K",
+            DayOfBirth = DateTime.UtcNow.AddDays(-12),
+            LastLogin = DateTime.UtcNow.AddDays(-2),
             FailedLoginAttempts = 0,
         }
-
+         
         };
-
-
 
         //public UserService()
         //{
@@ -73,10 +92,14 @@ namespace WebApplication1.Services.UserService
 
         public Task<UserModel> CreateUser(UserModel user)
         {
-            if (!_users.Contains(user))
+            var existingUser = _users.FirstOrDefault(u => u.Email == user.Email);
+            if (existingUser != null)
             {
-                _users.Add(user);
+                throw new Exception("User with this email already exists.");
             }
+            int maxId = _users.Any() ? _users.Max(u => u.Id) : 0;
+            user.Id = maxId+1;
+            _users.Add(user);
             return Task.FromResult(user);
         }
 

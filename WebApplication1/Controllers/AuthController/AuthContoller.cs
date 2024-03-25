@@ -32,6 +32,7 @@ namespace WebApplication1.Controllers.AuthController
             {
                 var response = new AuthResponseModel<LoginUser>();
                 var token = await _authService.Login(user);
+                response.Message = "Authorized";
                 response.StatusCode = HttpStatusCode.OK;
                 response.AccessToken = token;
                 return StatusCode((int)response.StatusCode, response);
@@ -43,7 +44,7 @@ namespace WebApplication1.Controllers.AuthController
                 {
                     Message = ex.Message,
                     StatusCode = HttpStatusCode.InternalServerError,
-                    Data = null
+                    
                 });
 
             }
@@ -57,16 +58,16 @@ namespace WebApplication1.Controllers.AuthController
                 var response = new AuthResponseModel<UserModel>();
                 var newUser = await _authService.Register(user);
                 response.StatusCode = HttpStatusCode.OK;
-                response.Data = newUser;
+                response.Message = "Authorized";
                 return StatusCode((int)response.StatusCode, response);
 
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
+                return StatusCode((int)HttpStatusCode.BadRequest, new ResponseModel<string>
                 {
                     Message = ex.Message,
-                    StatusCode = HttpStatusCode.InternalServerError,
+                    StatusCode = HttpStatusCode.BadRequest,
                     Data = null
                 });
 
