@@ -7,6 +7,7 @@ using WebApplication1.Services.AuthService;
 using WebApplication1.Services.AuthServices;
 using WebApplication1.Services.BookService;
 using WebApplication1.Services.LoanService;
+using WebApplication1.Services.PasswordService;
 using WebApplication1.Services.UserService;
 
 
