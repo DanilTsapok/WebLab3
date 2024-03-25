@@ -33,7 +33,7 @@ namespace WebApplication1.Controllers
             {
 
                 var response = new ResponseModel<List<BooksModel>>();
-                var DataFromApi = await _httpClient.GetAsync<KindBooks>($"https://www.googleapis.com/books/v1/volumes?q=reactr:keyes&{_configuration.GetSection("API_KEY").Value}=yourAPIKey");
+                var DataFromApi = await _httpClient.GetItems();
                 response.Data = DataFromApi.Items;
                 response.Message = "Good response";
                 response.StatusCode = HttpStatusCode.OK;
