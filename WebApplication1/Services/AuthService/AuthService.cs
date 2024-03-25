@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using WebApplication1.Models.ResponseModel;
 using WebApplication1.Models.UserModel;
-using WebApplication1.Services.AuthService;
+using WebApplication1.Services.PasswordService;
 using WebApplication1.Services.UserService;
 
 namespace WebApplication1.Services.AuthServices

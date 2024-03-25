@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Services.AuthService
+﻿using WebApplication1.Services.PasswordService;
+
+namespace WebApplication1.Services.AuthService
 {
     public class PasswordHasher : IPasswordHasher
     {

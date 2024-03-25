@@ -40,10 +40,11 @@ namespace WebApplication1.Controllers.AuthController
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseModel<string>
+                return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseModel<string>
                 {
-                    Message = ex.Message,
-                    StatusCode = HttpStatusCode.InternalServerError,
+                    Message = "Unauthorized",
+                    Data = ex.Message,
+                    StatusCode = HttpStatusCode.Unauthorized,
                     
                 });
 
